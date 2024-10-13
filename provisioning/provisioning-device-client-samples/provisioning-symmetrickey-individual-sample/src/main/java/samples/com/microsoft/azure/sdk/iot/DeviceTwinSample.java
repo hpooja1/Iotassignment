@@ -85,77 +85,77 @@ public class DeviceTwinSample
      * Reports properties to IotHub, receives desired property notifications from IotHub. Default protocol is to use
      * use MQTT transport.
      *
-     * @param args 
+     * @param client
      * args[0] = IoT Hub connection string
      */
-    public static void main(String[] args)
+    public static void doDevice(DeviceClient client)
             throws IOException, URISyntaxException
     {
-        System.out.println("Starting...");
-        System.out.println("Beginning setup.");
+//        System.out.println("Starting...");
+//        System.out.println("Beginning setup.");
+//
+//        if (args.length <1)
+//        {
+//            System.out.format(
+//                    "Expected the following argument but received: %d.\n"
+//                            + "The program should be called with the following args: \n"
+//                            + "[Device connection string] - String containing Hostname, Device Id & Device Key in the following formats: HostName=<iothub_host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>\n"
+//                            + "[Protocol] - (mqtt | amqps | amqps_ws)\n",
+//                            args.length);
+//            return;
+//        }
+//
+//        String connString = args[0];
+//
+//        IotHubClientProtocol protocol;
+//        if (args.length == 1)
+//        {
+//            protocol = IotHubClientProtocol.MQTT;
+//        }
+//        else
+//        {
+//            String protocolStr = args[1];
+//            if (protocolStr.equals("amqps"))
+//            {
+//                protocol = IotHubClientProtocol.AMQPS;
+//            }
+//            else if (protocolStr.equals("mqtt"))
+//            {
+//                protocol = IotHubClientProtocol.MQTT;
+//            }
+//            else if (protocolStr.equals("amqps_ws"))
+//            {
+//                protocol = IotHubClientProtocol.AMQPS_WS;
+//            }
+//            else if (protocolStr.equals("mqtt_ws"))
+//            {
+//                protocol = IotHubClientProtocol.MQTT_WS;
+//            }
+//            else
+//            {
+//                System.out.format(
+//                        "Expected argument 2 to be one of 'mqtt', 'https', 'amqps' , 'mqtt_ws' or 'amqps_ws' but received %s\n"
+//                                + "The program should be called with the following args: \n"
+//                                + "1. [Device connection string] - String containing Hostname, Device Id & Device Key in one of the following formats: HostName=<iothub_host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>\n"
+//                                + "2. (mqtt | amqps | amqps_ws | mqtt_ws)\n",
+//                        protocolStr);
+//                return;
+//            }
+//        }
+//
+//        System.out.println("Successfully read input parameters.");
+//        System.out.format("Using communication protocol %s.\n",
+//                protocol.name());
 
-        if (args.length < 1)
-        {
-            System.out.format(
-                    "Expected the following argument but received: %d.\n"
-                            + "The program should be called with the following args: \n"
-                            + "[Device connection string] - String containing Hostname, Device Id & Device Key in the following formats: HostName=<iothub_host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>\n"
-                            + "[Protocol] - (mqtt | amqps | amqps_ws)\n",
-                    args.length);
-            return;
-        }
-
-        String connString = args[0];
-
-        IotHubClientProtocol protocol;
-        if (args.length == 1)
-        {
-            protocol = IotHubClientProtocol.MQTT;
-        }
-        else
-        {
-            String protocolStr = args[1];
-            if (protocolStr.equals("amqps"))
-            {
-                protocol = IotHubClientProtocol.AMQPS;
-            }
-            else if (protocolStr.equals("mqtt"))
-            {
-                protocol = IotHubClientProtocol.MQTT;
-            }
-            else if (protocolStr.equals("amqps_ws"))
-            {
-                protocol = IotHubClientProtocol.AMQPS_WS;
-            }
-            else if (protocolStr.equals("mqtt_ws"))
-            {
-                protocol = IotHubClientProtocol.MQTT_WS;
-            }
-            else
-            {
-                System.out.format(
-                        "Expected argument 2 to be one of 'mqtt', 'https', 'amqps' , 'mqtt_ws' or 'amqps_ws' but received %s\n"
-                                + "The program should be called with the following args: \n"
-                                + "1. [Device connection string] - String containing Hostname, Device Id & Device Key in one of the following formats: HostName=<iothub_host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>\n"
-                                + "2. (mqtt | amqps | amqps_ws | mqtt_ws)\n",
-                        protocolStr);
-                return;
-            }
-        }
-
-        System.out.println("Successfully read input parameters.");
-        System.out.format("Using communication protocol %s.\n",
-                protocol.name());
-
-        DeviceClient client = new DeviceClient(connString, protocol);
-        System.out.println("Successfully created an IoT Hub client.");
+//        DeviceClient client = new DeviceClient(connString, protocol);
+//        System.out.println("Successfully created an IoT Hub client.");
 
         client.setConnectionStatusChangeCallback(new IotHubConnectionStatusChangeCallbackLogger(), new Object());
 
         try
         {
-            System.out.println("Opening connection to IoT hub");
-            client.open(true);
+//            System.out.println("Opening connection to IoT hub");
+//            client.open(true);
 
             System.out.println("Subscribing to desired properties");
             client.subscribeToDesiredProperties(new DesiredPropertiesUpdatedHandler(), null);
@@ -188,7 +188,7 @@ public class DeviceTwinSample
             System.out.println("Current twin:");
             System.out.println(twin);
 
-            reportedProperties.put("LivingRoomLights", LIGHTS.OFF);
+            reportedProperties.put("LivingRoomLights", LIGHTS.ON);
             reportedProperties.put("BedroomRoomLights", LIGHTS.ON);
             System.out.println("Updating reported property \"LivingRoomLights\" to value ON");
             System.out.println("Updating reported property \"BedroomRoomLights\" to value OFF");
@@ -213,7 +213,7 @@ public class DeviceTwinSample
         Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8.name());
         scanner.nextLine();
 
-        client.close();
+//        client.close();
 
         System.out.println("Shutting down...");
     }

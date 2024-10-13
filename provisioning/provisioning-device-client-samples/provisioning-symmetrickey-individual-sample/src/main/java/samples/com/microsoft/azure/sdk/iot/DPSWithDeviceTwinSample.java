@@ -9,6 +9,7 @@ package samples.com.microsoft.azure.sdk.iot;
 
 import com.microsoft.azure.sdk.iot.device.*;
 import com.microsoft.azure.sdk.iot.device.exceptions.IotHubClientException;
+import com.microsoft.azure.sdk.iot.device.twin.Twin;
 import com.microsoft.azure.sdk.iot.provisioning.device.*;
 import com.microsoft.azure.sdk.iot.provisioning.device.internal.exceptions.ProvisioningDeviceClientException;
 import com.microsoft.azure.sdk.iot.provisioning.security.SecurityProviderSymmetricKey;
@@ -21,7 +22,7 @@ import java.util.Scanner;
  * Symmetric Key authenticated individual enrollment sample
  */
 @SuppressWarnings("CommentedOutCode") // Ignored in samples as we use these comments to show other options.
-public class ProvisioningSymmetricKeyIndividualEnrollmentSample
+public class DPSWithDeviceTwinSample
 {
     // The scope Id of your DPS instance. This value can be retrieved from the Azure Portal
     private static final String ID_SCOPE = "0ne00DC4B4E";
@@ -34,8 +35,7 @@ public class ProvisioningSymmetricKeyIndividualEnrollmentSample
     // For the sake of security, you shouldn't save keys into String variables as that places them in heap memory. For the sake
     // of simplicity within this sample, though, we will save it as a string. Typically this key would be loaded as byte[] so that
     // it can be removed from stack memory.
-    private static final String SYMMETRIC_KEY = "7atVP29woVDXIXgqUpw7HgMoXPgGvIYeO2nl8UygxF8oPiq6abbb9oJJKJOb0jLE31Ie2HQcV+B+AIoTsXcqyw==";
-
+    private static final String SYMMETRIC_KEY = "GwhKhmOKUK0tOWUHV4a6Pzdh3iUOdOBOnMvEauXRWNKZLT9WCRov8T0mh7+Hokx1KTOhH9BIKfCHAIoTTsMt/g==";
 
     // The registration Id to provision the device to. When creating an individual enrollment prior to running this sample, you choose this value.
     private static final String REGISTRATION_ID = "Amrit-B2-dps";
@@ -72,12 +72,20 @@ public class ProvisioningSymmetricKeyIndividualEnrollmentSample
             // connect to iothub
             String iotHubUri = provisioningDeviceClientRegistrationResult.getIothubUri();
             String deviceId = provisioningDeviceClientRegistrationResult.getDeviceId();
-            DeviceClient deviceClient = new DeviceClient(iotHubUri, deviceId, securityClientSymmetricKey, IotHubClientProtocol.MQTT);
-            deviceClient.open(false);
-
+            
             System.out.println("Sending message from device to IoT Hub...");
-            deviceClient.sendEvent(new Message("Hello world!"));
-            deviceClient.close();
+            
+//			for (int i = 0; i < 10; i++) {
+				DeviceClient deviceClient = new DeviceClient(iotHubUri, deviceId, securityClientSymmetricKey,
+						IotHubClientProtocol.MQTT);
+				deviceClient.open(false);				
+				deviceClient.sendEvent(new Message("Hello from device"));
+//				Twin twin = deviceClient.getTwin();
+				DeviceTwinSample.doDevice(deviceClient);
+				deviceClient.close();
+				Thread.sleep(1000);
+//			}
+			
         }
 
         System.out.println("Press any key to exit...");
