@@ -8,12 +8,9 @@
 package samples.com.microsoft.azure.sdk.iot;
 
 import com.microsoft.azure.sdk.iot.device.*;
-import com.microsoft.azure.sdk.iot.device.exceptions.IotHubClientException;
 import com.microsoft.azure.sdk.iot.provisioning.device.*;
-import com.microsoft.azure.sdk.iot.provisioning.device.internal.exceptions.ProvisioningDeviceClientException;
 import com.microsoft.azure.sdk.iot.provisioning.security.SecurityProviderSymmetricKey;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
@@ -21,7 +18,7 @@ import java.util.Scanner;
  * Symmetric Key authenticated individual enrollment sample
  */
 @SuppressWarnings("CommentedOutCode") // Ignored in samples as we use these comments to show other options.
-public class ProvisioningSymmetricKeyIndividualEnrollmentSample
+public class ProvisioningSymmetricKeyIndividualEnrollmentDevice1
 {
     // The scope Id of your DPS instance. This value can be retrieved from the Azure Portal
     private static final String ID_SCOPE = "0ne00DC4B4E";
@@ -34,11 +31,11 @@ public class ProvisioningSymmetricKeyIndividualEnrollmentSample
     // For the sake of security, you shouldn't save keys into String variables as that places them in heap memory. For the sake
     // of simplicity within this sample, though, we will save it as a string. Typically this key would be loaded as byte[] so that
     // it can be removed from stack memory.
-    private static final String SYMMETRIC_KEY = "7atVP29woVDXIXgqUpw7HgMoXPgGvIYeO2nl8UygxF8oPiq6abbb9oJJKJOb0jLE31Ie2HQcV+B+AIoTsXcqyw==";
+    private static final String SYMMETRIC_KEY = "wYTa8QF/NZ8HhElxJ3QrVPjj2V53v1XlE+eDoax3/llM7FuS9tMQXQogTduP8GV3h4cjYjVNjK5IAIoTONUYOQ==";
 
 
     // The registration Id to provision the device to. When creating an individual enrollment prior to running this sample, you choose this value.
-    private static final String REGISTRATION_ID = "Amrit-B2-dps";
+    private static final String REGISTRATION_ID = "Amrit-device1";
 
     // Uncomment one line to choose which protocol you'd like to use
     private static final ProvisioningDeviceClientTransportProtocol PROVISIONING_DEVICE_CLIENT_TRANSPORT_PROTOCOL = ProvisioningDeviceClientTransportProtocol.HTTPS;

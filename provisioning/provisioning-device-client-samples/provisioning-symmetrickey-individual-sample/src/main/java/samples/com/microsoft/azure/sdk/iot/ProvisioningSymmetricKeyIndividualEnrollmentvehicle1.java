@@ -7,14 +7,15 @@
 
 package samples.com.microsoft.azure.sdk.iot;
 
-import com.microsoft.azure.sdk.iot.device.*;
-import com.microsoft.azure.sdk.iot.device.exceptions.IotHubClientException;
-import com.microsoft.azure.sdk.iot.device.twin.Twin;
-import com.microsoft.azure.sdk.iot.provisioning.device.*;
-import com.microsoft.azure.sdk.iot.provisioning.device.internal.exceptions.ProvisioningDeviceClientException;
+import com.microsoft.azure.sdk.iot.device.DeviceClient;
+import com.microsoft.azure.sdk.iot.device.IotHubClientProtocol;
+import com.microsoft.azure.sdk.iot.device.Message;
+import com.microsoft.azure.sdk.iot.provisioning.device.ProvisioningDeviceClient;
+import com.microsoft.azure.sdk.iot.provisioning.device.ProvisioningDeviceClientRegistrationResult;
+import com.microsoft.azure.sdk.iot.provisioning.device.ProvisioningDeviceClientStatus;
+import com.microsoft.azure.sdk.iot.provisioning.device.ProvisioningDeviceClientTransportProtocol;
 import com.microsoft.azure.sdk.iot.provisioning.security.SecurityProviderSymmetricKey;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
@@ -22,7 +23,7 @@ import java.util.Scanner;
  * Symmetric Key authenticated individual enrollment sample
  */
 @SuppressWarnings("CommentedOutCode") // Ignored in samples as we use these comments to show other options.
-public class DPSWithDeviceTwinSample
+public class ProvisioningSymmetricKeyIndividualEnrollmentvehicle1
 {
     // The scope Id of your DPS instance. This value can be retrieved from the Azure Portal
     private static final String ID_SCOPE = "0ne00DC4B4E";
@@ -35,10 +36,11 @@ public class DPSWithDeviceTwinSample
     // For the sake of security, you shouldn't save keys into String variables as that places them in heap memory. For the sake
     // of simplicity within this sample, though, we will save it as a string. Typically this key would be loaded as byte[] so that
     // it can be removed from stack memory.
-    private static final String SYMMETRIC_KEY = "wYTa8QF/NZ8HhElxJ3QrVPjj2V53v1XlE+eDoax3/llM7FuS9tMQXQogTduP8GV3h4cjYjVNjK5IAIoTONUYOQ==";
+    private static final String SYMMETRIC_KEY = "72QpzWZZNqH2ud0uFAq1VZbyVhGvLl0fmCNOREqMx3nEhEaTNlIGxmx05FD16RHCx385+hipdtXAAIoT1mtFIw==";
+
 
     // The registration Id to provision the device to. When creating an individual enrollment prior to running this sample, you choose this value.
-    private static final String REGISTRATION_ID = "Amrit-device1";
+    private static final String REGISTRATION_ID = "Amrit-vehicle1";
 
     // Uncomment one line to choose which protocol you'd like to use
     private static final ProvisioningDeviceClientTransportProtocol PROVISIONING_DEVICE_CLIENT_TRANSPORT_PROTOCOL = ProvisioningDeviceClientTransportProtocol.HTTPS;
@@ -72,20 +74,12 @@ public class DPSWithDeviceTwinSample
             // connect to iothub
             String iotHubUri = provisioningDeviceClientRegistrationResult.getIothubUri();
             String deviceId = provisioningDeviceClientRegistrationResult.getDeviceId();
-            
+            DeviceClient deviceClient = new DeviceClient(iotHubUri, deviceId, securityClientSymmetricKey, IotHubClientProtocol.MQTT);
+            deviceClient.open(false);
+
             System.out.println("Sending message from device to IoT Hub...");
-            
-//			for (int i = 0; i < 10; i++) {
-				DeviceClient deviceClient = new DeviceClient(iotHubUri, deviceId, securityClientSymmetricKey,
-						IotHubClientProtocol.MQTT);
-				deviceClient.open(false);				
-				deviceClient.sendEvent(new Message("Hello from device"));
-//				Twin twin = deviceClient.getTwin();
-				DeviceTwinSample.doDevice(deviceClient);
-				deviceClient.close();
-				Thread.sleep(1000);
-//			}
-			
+            deviceClient.sendEvent(new Message("Hello world!"));
+            deviceClient.close();
         }
 
         System.out.println("Press any key to exit...");
