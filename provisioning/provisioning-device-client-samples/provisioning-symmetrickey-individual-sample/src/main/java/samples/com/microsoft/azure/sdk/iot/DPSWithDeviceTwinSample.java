@@ -35,10 +35,10 @@ public class DPSWithDeviceTwinSample
     // For the sake of security, you shouldn't save keys into String variables as that places them in heap memory. For the sake
     // of simplicity within this sample, though, we will save it as a string. Typically this key would be loaded as byte[] so that
     // it can be removed from stack memory.
-    private static final String SYMMETRIC_KEY = "GwhKhmOKUK0tOWUHV4a6Pzdh3iUOdOBOnMvEauXRWNKZLT9WCRov8T0mh7+Hokx1KTOhH9BIKfCHAIoTTsMt/g==";
+    private static final String SYMMETRIC_KEY = "72QpzWZZNqH2ud0uFAq1VZbyVhGvLl0fmCNOREqMx3nEhEaTNlIGxmx05FD16RHCx385+hipdtXAAIoT1mtFIw==";
 
     // The registration Id to provision the device to. When creating an individual enrollment prior to running this sample, you choose this value.
-    private static final String REGISTRATION_ID = "Amrit-B2-dps";
+    private static final String REGISTRATION_ID = "Amrit-vehice1";
 
     // Uncomment one line to choose which protocol you'd like to use
     private static final ProvisioningDeviceClientTransportProtocol PROVISIONING_DEVICE_CLIENT_TRANSPORT_PROTOCOL = ProvisioningDeviceClientTransportProtocol.HTTPS;

@@ -33,12 +33,12 @@ public class ProvisioningSymmetricKeyEnrollmentGroupSample
     // Not to be confused with the symmetric key of the enrollment group itself, this key is derived from the symmetric
     // key of the enrollment group and the desired device id of the device to provision. See the
     // "ComputeDerivedSymmetricKeySample" code in this same directory for instructions on how to derive this key.
-    private static final String DERIVED_ENROLLMENT_GROUP_SYMMETRIC_KEY = "[Enter your derived symmetric key here]";
+    private static final String DERIVED_ENROLLMENT_GROUP_SYMMETRIC_KEY = "72QpzWZZNqH2ud0uFAq1VZbyVhGvLl0fmCNOREqMx3nEhEaTNlIGxmx05FD16RHCx385+hipdtXAAIoT1mtFIw==";
 
     // The Id to assign to this device when it is provisioned to an IoT Hub. This value is arbitrary outside of some
     // character limitations. For sample purposes, this value is filled in for you, but it may be changed. This value
     // must be consistent with the device id used when deriving the symmetric key that is used in this sample.
-    private static final String PROVISIONED_DEVICE_ID = "prajay-group-001";
+    private static final String PROVISIONED_DEVICE_ID = "amrit-vehicle1";
 
     // Uncomment one line to choose which protocol you'd like to use
     private static final ProvisioningDeviceClientTransportProtocol PROVISIONING_DEVICE_CLIENT_TRANSPORT_PROTOCOL = ProvisioningDeviceClientTransportProtocol.HTTPS;
